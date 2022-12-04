@@ -1,0 +1,58 @@
+<%- include("./partials/header.ejs") %>
+
+<div class="home"><a href="./home">الصفحة الرئيسية</a></div>
+
+<h1>قائمة الولادات</h1>
+<div class="list"></div>
+<script type="text/javascript">
+
+    if('<%- birthData %>'){
+
+        let table = document.createElement('table');
+        let thead = document.createElement('thead');
+        let tbody = document.createElement('tbody');
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        // Creating and adding data to first row of the table
+        let row_1 = document.createElement('tr');
+        let heading_1 = document.createElement('th');
+        heading_1.innerHTML = "تاريخ الولادة ";
+        let heading_2 = document.createElement('th');
+        heading_2.innerHTML = "رقم الام";
+
+        row_1.appendChild(heading_1);
+        row_1.appendChild(heading_2);
+        thead.appendChild(row_1);
+
+
+        // Adding the entire table to the body tag
+        document.getElementsByTagName('div')[1].appendChild(table);
+
+        var data = JSON.parse('<%- birthData %>')
+
+        for (var i = 0; i<data.length;i++){
+
+            // Creating and adding data to second row of the table
+            let row = document.createElement('tr');
+
+            let row_data_1 = document.createElement('td');
+            row_data_1.innerHTML = data[i].mother_num;
+
+            let row_data_2 = document.createElement('td');
+            row_data_2.innerHTML = data[i].birth_date;
+
+
+            row.appendChild(row_data_2);
+            row.appendChild(row_data_1);
+
+            const tbody = document.getElementsByTagName('tbody')[0];
+            tbody.appendChild(row);
+
+    }
+    }else{document.getElementsByTagName('div')[1].innerHTML="<h4>لم يتم تسجيل اي ولادات</h4>"}
+
+</script>
+<%- include("./partials/footer.ejs") %>
+

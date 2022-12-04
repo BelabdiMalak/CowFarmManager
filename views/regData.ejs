@@ -1,0 +1,65 @@
+<%- include("./partials/header.ejs") %>
+
+<div class="home"><a href="./home">الصفحة الرئيسية</a></div>
+
+<h1>قائمة البقر</h1>
+<div class="list"></div>
+<script type="text/javascript">
+
+if('<%- regData %>'){
+
+    let table = document.createElement('table');
+    let thead = document.createElement('thead');
+    let tbody = document.createElement('tbody');
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    // Creating and adding data to first row of the table
+    let row_1 = document.createElement('tr');
+    let heading_1 = document.createElement('th');
+    heading_1.innerHTML = "تاريخ الدخول";
+    let heading_2 = document.createElement('th');
+    heading_2.innerHTML = "السلالة";
+    let heading_3 = document.createElement('th');
+    heading_3.innerHTML = "الرقم";
+
+    row_1.appendChild(heading_1);
+    row_1.appendChild(heading_2);
+    row_1.appendChild(heading_3);
+    thead.appendChild(row_1);
+
+
+    // Adding the entire table to the body tag
+    document.getElementsByTagName('div')[1].appendChild(table);
+
+    var data = JSON.parse('<%- regData %>')
+    for (var i = 0; i<data.length;i++){
+
+        // Creating and adding data to second row of the table
+        let row = document.createElement('tr');
+
+        let row_data_1 = document.createElement('td');
+        row_data_1.innerHTML = data[i].cow_num;
+
+        let row_data_2 = document.createElement('td');
+        row_data_2.innerHTML = data[i].type;
+
+        let row_data_3 = document.createElement('td');
+        row_data_3.innerHTML =data[i].reg_date;
+
+        row.appendChild(row_data_3);
+        row.appendChild(row_data_2);
+        row.appendChild(row_data_1);
+
+        const tbody = document.getElementsByTagName('tbody')[0];
+        tbody.appendChild(row);
+
+    }
+    }else{
+        document.getElementsByTagName('div')[1].innerHTML="<h4>لم يتم تسجيل اي بقرة</h4>"
+    }
+ 
+</script>
+<%- include("./partials/footer.ejs") %>
+

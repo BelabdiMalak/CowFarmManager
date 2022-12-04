@@ -1,0 +1,49 @@
+<%- include("./partials/header.ejs") %>
+
+<div class="home"><a href="./home">الصفحة الرئيسية</a></div>
+<h1>تسجيل الولادات</h1>
+
+<form action="/birthRegistration" method="post" class="wrapper">
+    <p id="error"></p>
+    <div>
+        <input type="number" name="mother_num" min="0" placeholder="... ادخل رقم البقرة الام" oninvalid="this.setCustomValidity('من فضلك ادخل رقم البقرة الام')" required />
+        <label id="label6" for="mother_num">رقم الام</label>
+    </div>
+    <div>
+        <input type="date" name="birth_date" class="date" required />
+        <label id="label7"  for="birth_date">تاريخ الولادة</label>
+    </div>
+    <button class="btn1">تسجيل</button>
+</form>
+<form method="get" action="birthData">
+    <button class="btn2">قائمة الولادات </button>
+</form> 
+<a  id="registerBaby" href="./cowRegistration"></a>
+
+<script type="text/javascript">
+
+
+//set date to the current date
+    var currentDate = new Date();
+    var m = currentDate.getMonth()+1;
+    var y =currentDate.getFullYear()
+    var d = currentDate.getDate()
+
+    if(m<10){m = '0'+m};  if(d<10){d = '0'+d};
+
+    var today =y +'-'+m+ '-' + d
+    document.querySelector('.date').value = today
+    document.querySelector('.date').setAttribute('max',today)
+
+     //display "register the new baby" if the birth was well added
+    let message = '<%=message%>'
+    if(message==="birth well added"){
+        document.getElementById('registerBaby').textContent = "هل تريد تسجيل العجل الجديد؟"}
+    else if (message == "يرجى تسجيل البقرة الام اولا"){
+        document.getElementById('error').textContent = message
+    }
+
+</script>
+
+<%- include("./partials/footer.ejs") %>
+
