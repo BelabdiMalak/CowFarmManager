@@ -33,8 +33,8 @@ if('<%- regData %>'){
     // Adding the entire table to the body tag
     document.getElementsByTagName('div')[1].appendChild(table);
 
-    var data = JSON.parse('<%- regData %>')
-    for (var i = 0; i<data.length;i++){
+    let data = JSON.parse('<%- regData %>')
+    for (let i = 0; i<data.length;i++){
 
         // Creating and adding data to second row of the table
         let row = document.createElement('tr');

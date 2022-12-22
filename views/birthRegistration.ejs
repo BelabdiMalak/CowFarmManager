@@ -24,14 +24,14 @@
 
 
 //set date to the current date
-    var currentDate = new Date();
-    var m = currentDate.getMonth()+1;
-    var y =currentDate.getFullYear()
-    var d = currentDate.getDate()
+    let currentDate = new Date();
+    let m = currentDate.getMonth()+1;
+    let y =currentDate.getFullYear()
+    let d = currentDate.getDate()
 
     if(m<10){m = '0'+m};  if(d<10){d = '0'+d};
 
-    var today =y +'-'+m+ '-' + d
+    let today =y +'-'+m+ '-' + d
     document.querySelector('.date').value = today
     document.querySelector('.date').setAttribute('max',today)
 
@@ -46,4 +46,3 @@
 </script>
 
 <%- include("./partials/footer.ejs") %>
-

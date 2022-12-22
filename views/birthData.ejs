@@ -30,9 +30,9 @@
         // Adding the entire table to the body tag
         document.getElementsByTagName('div')[1].appendChild(table);
 
-        var data = JSON.parse('<%- birthData %>')
+        let data = JSON.parse('<%- birthData %>')
 
-        for (var i = 0; i<data.length;i++){
+        for (let i = 0; i<data.length;i++){
 
             // Creating and adding data to second row of the table
             let row = document.createElement('tr');

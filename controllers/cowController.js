@@ -3,56 +3,56 @@ const fs = require('fs');
 
 //get the path to json data folder
 const path     = require('path')
-const dataPath = path.join(__dirname, '../public/jsonData/')
+const DATA_PATH = path.join(__dirname, '../public/jsonData/')
 
 
 //we export every request handler to the router
 
 
 //GET request handlers
-module.exports.cow_registration_get = (req, res) => {res.render('cowRegistration', message="");}
+module.exports.cow_registration_get    = (req, res) => res.render('cowRegistration', message="")
 
-module.exports.medical_examination_get = (req, res) => { res.render('medicalExamination'); }
+module.exports.medical_examination_get = (req, res) => res.render('medicalExamination')
 
-module.exports.birth_registration_get = (req, res) => { res.render('birthRegistration', {message:""})}
+module.exports.birth_registration_get  = (req, res) => res.render('birthRegistration', {message:""})
 
-module.exports.milk_production_get = (req, res) => { res.render('milkProduction'); }
+module.exports.milk_production_get     = (req, res) =>  res.render('milkProduction'); 
 
 
 
 //GET requests for displaying data lists
-module.exports.regData_get = (req, res) =>{
-
-    if(fs.existsSync(dataPath+'RegData.json')){
-        var regData = fs.readFileSync(dataPath+'RegData.json', 'utf-8');
-    }else {var regData=""}
+module.exports.registration_data_get = (req, res) =>{
+    let regData=""
+    if(fs.existsSync(DATA_PATH+'RegData.json')){
+        regData = fs.readFileSync(DATA_PATH+'RegData.json', 'utf-8');
+    }
     res.render('regData', {regData});
 
 }
 
-module.exports.medData_get = (req, res) =>{
-
-    if(fs.existsSync(dataPath+'MedData.json')){
-        var medData = fs.readFileSync(dataPath+'MedData.json', 'utf-8');
-    }else {var medData=""}
+module.exports.medical_data_get = (req, res) =>{
+    let medData = ""
+    if(fs.existsSync(DATA_PATH+'MedData.json')){
+        medData = fs.readFileSync(DATA_PATH+'MedData.json', 'utf-8');
+    }
     res.render('medData', {medData});
 
 }
 
-module.exports.birthData_get = (req, res) =>{
-
-    if(fs.existsSync(dataPath+'BirthData.json')){
-        var birthData = fs.readFileSync(dataPath+'BirthData.json', 'utf-8');
-    }else {var birthData=""}
+module.exports.birth_data_get = (req, res) =>{
+    let birthData = ""
+    if(fs.existsSync(DATA_PATH+'BirthData.json')){
+        birthData = fs.readFileSync(DATA_PATH+'BirthData.json', 'utf-8');
+    }
     res.render('birthData', {birthData});
     
 }
 
-module.exports.milkData_get = (req, res) =>{
-
-    if(fs.existsSync(dataPath+'MilkData.json')){
-        var milkData = fs.readFileSync(dataPath+'MilkData.json', 'utf-8');
-    }else {var milkData=""}
+module.exports.milk_data_get = (req, res) =>{
+    let milkData = ""
+    if(fs.existsSync(DATA_PATH+'MilkData.json')){
+        milkData = fs.readFileSync(DATA_PATH+'MilkData.json', 'utf-8');
+    }
     res.render('milkData', {milkData});
     
 }
@@ -63,7 +63,7 @@ module.exports.milkData_get = (req, res) =>{
 //POST request handlers
 
 //function to create json files
-var createData = (request,  fileName)=>{
+let createData = (request,  fileName)=>{
 
     /* if our json file is already initialized we read the old data than we add the new content
             1: Get old data and parse it into a javaScript object
@@ -72,29 +72,29 @@ var createData = (request,  fileName)=>{
         else we push content in a new file
     */
 
-    if (fs.existsSync(dataPath+ fileName)) {
+    if (fs.existsSync(DATA_PATH + fileName)) {
 
-        var oldData = JSON.parse(fs.readFileSync(dataPath+fileName));//1
+        let oldData = JSON.parse(fs.readFileSync(DATA_PATH+fileName));//1
         oldData.push(request.body);//2
-        var readFile = fs.createWriteStream(dataPath+fileName, { flags: 'r+' });//3
+        let readFile = fs.createWriteStream(DATA_PATH+fileName, { flags: 'r+' });//3
         readFile.write(JSON.stringify(oldData));//3
 
     } else {
 
-        var list = [];  list.push(request.body);
-        var readFile = fs.createWriteStream(dataPath+fileName);
+        let list = [];  list.push(request.body);
+        let readFile = fs.createWriteStream(DATA_PATH+fileName);
         readFile.write(JSON.stringify(list))
 
     }
 }
 
 //function to check if the cow_num/mother_num exists
-var includes_num = (fileName, param) => {
+let idExists = (fileName, param) => {
 
-    var includes =false;
-    var file = JSON.parse(fs.readFileSync(dataPath+fileName,'utf-8'));
+    let includes =false;
+    let file = JSON.parse(fs.readFileSync(DATA_PATH+fileName,'utf-8'));
 
-    for(var i=0; i<file.length;i++){
+    for(let i=0; i<file.length;i++){
         if( file[i].cow_num == param){includes = true; break;};
     }
     return includes;
@@ -111,11 +111,11 @@ module.exports.milk_production_post = (req, res) =>
 
 module.exports.birth_registration_post = (req, res) => {
 
-    var b = false;
-    if(fs.existsSync(dataPath+'RegData.json')){//if we have at least one registered cow
+    let b = false;
+    if(fs.existsSync(DATA_PATH+'RegData.json')){//if we have at least one registered cow
 
         //if the mother is registered so add the birth normally
-        if(includes_num('RegData.json', req.body.mother_num)){createData(req, 'BirthData.json');
+        if(idExists('RegData.json', req.body.mother_num)){createData(req, 'BirthData.json');
         b = true;
         res.render('birthRegistration',{message:"birth well added"})
 
@@ -131,17 +131,17 @@ module.exports.birth_registration_post = (req, res) => {
 
 module.exports.cow_registration_post = (req, res) => {
 
-    var b = false;
-    if (fs.existsSync(dataPath+'RegData.json')) {
+    let hasError = true;
+    if (fs.existsSync(DATA_PATH+'RegData.json')) {
 
-        var oldData = JSON.parse(fs.readFileSync(dataPath+'RegData.json','utf-8'));
+        let oldData = JSON.parse(fs.readFileSync(DATA_PATH+'RegData.json','utf-8'));
 
-        if(!includes_num('RegData.json', req.body.cow_num)){
+        if(!idExists('RegData.json', req.body.cow_num)){
 
             oldData.push(req.body);//2
-            var readFile = fs.createWriteStream(dataPath+'RegData.json', { flags: 'r+' });//3
+            let readFile = fs.createWriteStream(DATA_PATH+'RegData.json', { flags: 'r+' });//3
             readFile.write(JSON.stringify(oldData));//3;
-            b=true;
+            hasError=false;
 
         }else{
             res.render('cowRegistration',{message:'هذا الرقم محجوز, ادخل رقما اخر'})
@@ -149,12 +149,12 @@ module.exports.cow_registration_post = (req, res) => {
 
     }else{
 
-        var list = [];  list.push(req.body);
-        var readFile = fs.createWriteStream(dataPath+'RegData.json');
+        let list = [];  list.push(req.body);
+        let readFile = fs.createWriteStream(DATA_PATH+'RegData.json');
         readFile.write(JSON.stringify(list));
-        b=true;
+        hasError=false;
 
     }
-    if(b){res.render('cowRegistration',{message:""})}
+    if(!hasError){res.render('cowRegistration',{message:""})}
 
 }

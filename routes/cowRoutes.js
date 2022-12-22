@@ -22,10 +22,10 @@ router.post('/milkProduction'    , cowController.milk_production_post);
 
 
 //get requests to display the json lists
-router.get('/regData'  , cowController.regData_get);
-router.get('/medData'  , cowController.medData_get);
-router.get('/milkData' , cowController.milkData_get);
-router.get('/birthData', cowController.birthData_get);
+router.get('/regData'  , cowController.registration_data_get);
+router.get('/medData'  , cowController.medical_data_get);
+router.get('/milkData' , cowController.milk_data_get);
+router.get('/birthData', cowController.birth_data_get);
 
 
 //export the router to the server
