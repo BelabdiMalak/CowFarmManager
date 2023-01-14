@@ -1,0 +1,27 @@
+{
+  "registrationData": [
+    {
+      "cowNum": 0,
+      "type": "الهولتشاين",
+      "regDate": "2023-01-25",
+      "id": 1
+    }
+  ],
+  "birthData": [
+    {
+      "motherNum": 0,
+      "birthDate": "2023-01-24",
+      "id": 1
+    }
+  ],
+  "medicalData": [
+   
+  ],
+  "milkData": [
+    {
+      "milkLtr": 0,
+      "productionDate": "2023-01-11",
+      "id": 1
+    }
+  ]
+}
