@@ -23,16 +23,4 @@ const Registration = mongoose.model(
     registrationSchema
     );
 
-function validateGenre(registration){
-    const schema = Joi.object({
-        number: Joi.number().required(),
-        entryDate: Joi.date().required(),
-        breed: Joi.string().valid('Holstein', 'Montbeliard').required()
-    });
-    return schema.validate(registration);
-};
-
-module.exports = {
-    Registration,
-    validateGenre
-};
+module.exports = Registration;
