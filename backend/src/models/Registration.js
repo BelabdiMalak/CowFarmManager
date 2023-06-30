@@ -15,6 +15,10 @@ const registrationSchema = new mongoose.Schema({
         type: String, 
         required: true, 
         enum: ['Holstein', 'Montbeliard']
+    },
+    consultations: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Consultation'
     }
 });
 

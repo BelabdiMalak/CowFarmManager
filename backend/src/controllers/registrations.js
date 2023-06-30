@@ -3,8 +3,8 @@ const Registration = require('../models/Registration');
 
 exports.getRegistrations = async (req, res)=>{
     try {
-        const registrations = await Registration.find();
-        res.json(registrations);
+        const registrations = await Registration.find().populate('consultations');
+        res.status(200).json(registrations);
     } catch (error) {
         res.status(500).send({ error : 'Failed to fetch registrations' });
     }
@@ -37,7 +37,7 @@ exports.updateRegistration = async (req, res)=>{
             id,
             { number, entryDate, breed },
             { new: true }
-        );
+        ).populate('consultations');
         if(!registration) res.status(404).json({ error: 'Registration not found'});
         res.status(201).json(registration);
     } catch (error) {
@@ -52,7 +52,7 @@ exports.updateRegistration = async (req, res)=>{
 exports.getRegistration = async (req, res)=>{
     try {
         const { id } = req.params;
-        const registration = await Registration.findById(id);
+        const registration = await Registration.findById(id).populate('consultations');
         if(!registration) return res.status(404).json({ error: 'Registration not found' });
         res.status(200).json(registration);
     } catch (error) {
