@@ -30,3 +30,22 @@ exports.postBirth = async (req, res)=>{
         res.status(500).json({ error: 'Failed to post birth' });
     }
 }; 
+
+exports.updateBirth = async (req, res)=>{
+    const { id } = req.params;
+    const { birthDate, motherID } = req.body;
+    if(!mongoose.Types.ObjectId.isValid(id)) 
+    return res.status(404).json({ error: 'Birth not found' });
+    if(!mongoose.Types.ObjectId.isValid(motherID)) 
+    return res.status(400).json({ error: 'Invalid mother ID' });
+    const mother = await Registration.findById(motherID).populate('consultations');
+    if(!mother) 
+    return res.status(400).json({ error: 'Invalid mother ID' });
+    let birth = await Birth.findByIdAndUpdate(
+        id,
+        { birthDate, motherID },
+        { new: true }
+    ).populate('motherID');
+    if(!birth) res.status(404).json({ error: 'Birth not found' });
+    res.status(201).json(birth);
+}
