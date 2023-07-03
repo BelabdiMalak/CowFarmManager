@@ -10,5 +10,5 @@ module.exports = function(app){
     app.use('/api/registrations', registrations);
     app.use('/api/consultations', consultations);
     //app.use('/api/productions', productions);
-    //app.use('/api/births', births);
+    app.use('/api/births', births);
 };

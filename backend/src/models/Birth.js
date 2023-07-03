@@ -5,7 +5,7 @@ const birthSchema = new mongoose.Schema({
         type: Date,
         required: true
     }, 
-    motherId: {
+    motherID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Registration'
     }

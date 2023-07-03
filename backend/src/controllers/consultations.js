@@ -10,7 +10,7 @@ exports.getConsultations = async (req, res)=>{
     }
 };
 
-exports.postConsultations = async (req, res)=>{
+exports.postConsultation = async (req, res)=>{
     try {
         const { consltDate, sickness, registration } = req.body;
         const consultation = new Consultation({ consltDate, sickness, registration });
