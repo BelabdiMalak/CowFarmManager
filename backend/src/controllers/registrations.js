@@ -57,9 +57,13 @@ exports.updateRegistration = async (req, res) => {
   
       res.status(200).json(registration);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to update registration' });
+      if (error instanceof mongoose.Error.ValidationError){
+        const validationError = Object.values(error.errors)[0].message;
+        return res.status(400).json({ error: validationError });
     }
+    res.status(500).json({ error: 'Failed to update registration' });
   };
+};
   
 exports.getRegistration = async (req, res)=>{
     try {

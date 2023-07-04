@@ -20,6 +20,10 @@ exports.postConsultation = async (req, res)=>{
         consultation = await consultation.save();
         res.status(201).json(consultation);
     } catch (error) {
+        if (error instanceof mongoose.Error.ValidationError){
+            const validationError = Object.values(error.errors)[0].message;
+            return res.status(400).json({ error: validationError });
+        }
         res.status(500).json({ error: 'Failed to post consulation' });
     }
 };
@@ -45,7 +49,11 @@ exports.updateConsultation = async (req, res)=>{
         if(!consultation) res.status(404).json({ error: 'Consultation not found' });
         res.status(201).json(consultation);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update consultation' });
+        if (error instanceof mongoose.Error.ValidationError){
+            const validationError = Object.values(error.errors)[0].message;
+            return res.status(400).json({ error: validationError });
+        }
+        res.status(500).json({ error: 'Failed to post consulation' });
     }
 };
 
