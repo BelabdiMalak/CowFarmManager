@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Birth = require('../models/Birth');
 const Registration = require('../models/Registration')
 
-// controller
 exports.getBirths = async (req, res)=>{
     try {
         const births = await Birth.find().populate('motherID');
