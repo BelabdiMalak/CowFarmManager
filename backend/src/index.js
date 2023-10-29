@@ -19,7 +19,6 @@ require('./startup/db')();
 
 require('./startup/routes')(app);
 
-// database connection
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
